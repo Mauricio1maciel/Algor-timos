@@ -1,0 +1,7 @@
+ano_atual = int(input("Digite o ano atual: "))
+modelo  = input("Qual é o modelo do carro: ")
+ano_carro = int(input("Em que ano foi fabricado: "))
+valor_carro = float(input("Informe o valor do carro: "))
+idade_carro = (ano_atual - ano_carro)
+print("Carro, ",modelo)
+print ("A tabela deste carro de",ano_carro," com ",idade_carro,"anos de uso vale R$%.3f reais"%valor_carro)
