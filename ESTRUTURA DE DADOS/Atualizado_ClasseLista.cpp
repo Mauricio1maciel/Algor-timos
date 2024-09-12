@@ -72,10 +72,10 @@
 	{
 		//Inserir o valor no fim(f) da lista.
 		//Aumenta o f e insere o valor, n�o tem rearanjo.
-		if(f == 10){
+		if(f == 9){
 			printf("LISTA CHEIA\n");
 		}else{
-			info[f] = valor;
+			info[f + 1] = valor;
 			f++;
 		}
 	}
@@ -124,7 +124,7 @@
 			return -1;
 		}else{
 			int valor = info[k];
-			while(k < f - 1){
+			while(k < f){
 				info[k] = info[k + 1];
 				k++;
 			}
@@ -136,7 +136,7 @@
 	void ClasseListaSimples::MostrarLista()
 	{
 		//Mostrar � percorrer a lista at� o controle f
-		 int i = 0;
+		int i = 0;
         while(i <= f){
            printf("%d ", info[i]);
            i++;
@@ -177,17 +177,53 @@
 				break;
 			else if(OP == 1)
 			{
+				int valor;
+				printf("Digite o valor a ser inserido: ");
+				scanf("%d", &valor);
+				ListaObj.InserirValorFimLista(valor);
+			}
+			else if(OP == 2){
+				int valor, k;
+				printf("Digite o valor a ser inserido: ");
+				scanf("%d", &valor);
+				printf("Digite o índice k: ");
+                scanf("%d", &k);
+				ListaObj.InserirK_esimoValorLista(valor, k);
+			}
+			else if(OP == 3){
+				int valor, k;
+				printf("Digite o valor a ser inserido: ");
+				scanf("%d", &valor);
+				printf("Digite o índice k: ");
+                scanf("%d", &k);
+                ListaObj.InserirAposK_esimoValorLista(valor, k);
 
 			}
-			else if(OP == 4)
-			{
+			else if(OP == 4){
 				if(ListaObj.ListaVazia())
 					printf("A lista ainda se encontra vazia.\n");
 				else
 				{
-
+					int k;
+                    printf("Digite o índice k: ");
+                    scanf("%d", &k);
+                    int valorRemovido = ListaObj.RemoverK_esimoValorLista(k);
+                    if (valorRemovido != -1)
+                        printf("Valor removido: %d\n", valorRemovido);
+         
 				}
 			}
+			 else if (OP == 5){
+                  int k;
+                  printf("Digite o índice k: ");
+                  scanf("%d", &k);
+                  int valor = ListaObj.RetornarK_esimoElemento(k);
+                  if (valor != -1)
+                      printf("Valor no índice %d: %d\n", k, valor);
+            }
+            else if (OP == 6){
+            ListaObj.MostrarLista();
+        }
 			system("pause");
 		}
 	}
