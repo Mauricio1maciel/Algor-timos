@@ -60,6 +60,12 @@ bool ClasseListaSimples::ValidaLimiteLista(int k)
 void ClasseListaSimples::InserirValorFimLista(int valor)
 {
 	//TODO Generated function
+	if(fim == 10){
+		printf("LISTA CHEIA\n");
+	}else{
+		lista[fim] = valor;
+		fim++;
+	}
 }
 
 
