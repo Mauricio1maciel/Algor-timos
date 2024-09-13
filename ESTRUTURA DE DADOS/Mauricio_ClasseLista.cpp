@@ -11,7 +11,7 @@
 		//Verifica se a lista est� vazia
 		bool ListaVazia();
 		//Faz a verificacao se a Lista esta cheia
-		bool ValidaInsercao(int k);
+		bool ValidaInsercao();
 		//Faz a verificacao se o k est� dentre o inicio(0) e o fim(f)  
 		bool ValidaLimiteLista(int k);
 		//Insere valor no fim da lista
@@ -44,10 +44,23 @@
 			return false;
 	}
 
-	bool ClasseListaSimples::ValidaInsercao(int k)
+	bool ClasseListaSimples::ValidaInsercao()
 	{
 		//Aqui � um c�digo que vai ser utilizado varias vezes, 
 		//Aqui verifica de o f atingiu o final do tamanho da lista
+		if (f == 9 ){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	bool ClasseListaSimples::ValidaLimiteLista(int k)
+	{
+		//Aqui � um c�digo que vai ser utilizado varias vezes, 
+		//por isso foi criada uma fun��o - se  k > f  ou  k < 0 entao 
+		
 		if(k > f || k < 0){
 			return true;	
 		}
@@ -56,23 +69,11 @@
 		}
 	}
 
-	bool ClasseListaSimples::ValidaLimiteLista(int k)
-	{
-		//Aqui � um c�digo que vai ser utilizado varias vezes, 
-		//por isso foi criada uma fun��o - se  k > f  ou  k < 0 entao 
-		if (f + 1 == 9 ){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-
 	void ClasseListaSimples::InserirValorFimLista(int valor)
 	{
 		//Inserir o valor no fim(f) da lista.
 		//Aumenta o f e insere o valor, n�o tem rearanjo.
-		if(f == 9){
+		if(ValidaInsercao()){
 			printf("LISTA CHEIA\n");
 		}else{
 			info[f + 1] = valor;
@@ -83,9 +84,9 @@
 	void ClasseListaSimples::InserirK_esimoValorLista(int valor, int k)
 	{
 		//Pseudocodigo 3 do material
-		if (k > f || k < 0){ 
+		if (ValidaLimiteLista(k)){ 
 			printf("K-ÉSIMO ELEMENTO NÃO EXISTE\n");
-	    }else if( f == 9){
+	    }else if(ValidaInsercao()){
 		  printf("LISTA CHEIA\n");
 	    }else{
 		  int i = f;
@@ -101,9 +102,9 @@
 	void ClasseListaSimples::InserirAposK_esimoValorLista(int valor, int k)
 	{
 		//Pseudocodigo 2 do material
-		if(k > f || k < 0){
+		if(ValidaLimiteLista(k)){
 			printf("K-ÉSIMO ELEMENTO NÃO EXISTE\n");
-		}else if(f == 9){
+		}else if(ValidaInsercao()){
 			printf("LISTA CHEIA\n");
 		}else{
 			int i = f;
@@ -119,7 +120,7 @@
 	int ClasseListaSimples::RemoverK_esimoValorLista(int k)
 	{
 		//Pseudocodigo 4 do material
-		if(k > f || k < 0){
+		if(ValidaLimiteLista(k)){
 			printf("K-ÉSIMO ELEMENTO NÃO EXISTE\n");
 			return -1;
 		}else{
@@ -147,83 +148,87 @@
 	int ClasseListaSimples::RetornarK_esimoElemento(int k)
 	{
 		//Pseudocodigo 1 do material
-		if(k > f || k < 0){
+		if(ValidaLimiteLista(k)){
 			printf("Elemento não existe\n");
 			return -1;
 		}else{
-			return info[k];
+			int valor = info[k];
+			return valor;
 		}
 		
 	}
 
 
 	int main()
-	{
-		int OP;
-		ClasseListaSimples ListaObj(-1);
-		while(1)
-		{
-			LimpaTela;
-			printf("1 - Inserir no fim da lista.\n");
-			printf("2 - Inserir valor no K-esimo indice da lista.\n");
-			printf("3 - Inserir valor apos o K-esimo indice da lista.\n");
-			printf("4 - Remover K-esimo valor da lista.\n");
-			printf("5 - Retornar K-�simo elemento da lista.\n");
-			printf("6 - Mostrar lista.\n");
-			printf("0 - Sair.\n");
-			printf("Entre com a opcao: ");
-			scanf("%d", &OP);
-			if (OP == 0)
-				break;
-			else if(OP == 1)
-			{
-				int valor;
-				printf("Digite o valor a ser inserido: ");
-				scanf("%d", &valor);
-				ListaObj.InserirValorFimLista(valor);
-			}
-			else if(OP == 2){
-				int valor, k;
-				printf("Digite o valor a ser inserido: ");
-				scanf("%d", &valor);
-				printf("Digite o índice k: ");
+{
+    int OP, valor, k;
+    ClasseListaSimples ListaObj(-1);
+    
+    while (1)
+    {
+        LimpaTela;
+        printf("1 - Inserir no fim da lista.\n");
+        printf("2 - Inserir valor no K-ésimo índice da lista.\n");
+        printf("3 - Inserir valor após o K-ésimo índice da lista.\n");
+        printf("4 - Remover K-ésimo valor da lista.\n");
+        printf("5 - Retornar K-ésimo elemento da lista.\n");
+        printf("6 - Mostrar lista.\n");
+        printf("0 - Sair.\n");
+        printf("Entre com a opcao: ");
+        scanf("%d", &OP);
+        
+        if (OP == 0)
+            break;
+        else if (OP == 1)
+        {
+            printf("Entre com o valor para inserir no fim: ");
+            scanf("%d", &valor);
+            ListaObj.InserirValorFimLista(valor);
+        }
+        else if (OP == 2)
+        {
+            printf("Entre com o valor e o índice para inserir: ");
+            scanf("%d %d", &valor, &k);
+            ListaObj.InserirK_esimoValorLista(valor, k);
+        }
+        else if (OP == 3)
+        {
+            printf("Entre com o valor e o índice após o qual inserir: ");
+            scanf("%d %d", &valor, &k);
+            ListaObj.InserirAposK_esimoValorLista(valor, k);
+        }
+        else if (OP == 4)
+        {
+            if (ListaObj.ListaVazia())
+                printf("A lista ainda se encontra vazia.\n");
+            else
+            {
+                printf("Entre com o índice para remover: ");
                 scanf("%d", &k);
-				ListaObj.InserirK_esimoValorLista(valor, k);
-			}
-			else if(OP == 3){
-				int valor, k;
-				printf("Digite o valor a ser inserido: ");
-				scanf("%d", &valor);
-				printf("Digite o índice k: ");
-                scanf("%d", &k);
-                ListaObj.InserirAposK_esimoValorLista(valor, k);
-
-			}
-			else if(OP == 4){
-				if(ListaObj.ListaVazia())
-					printf("A lista ainda se encontra vazia.\n");
-				else
-				{
-					int k;
-                    printf("Digite o índice k: ");
-                    scanf("%d", &k);
-                    int valorRemovido = ListaObj.RemoverK_esimoValorLista(k);
-                    if (valorRemovido != -1)
-                        printf("Valor removido: %d\n", valorRemovido);
-         
-				}
-			}
-			 else if (OP == 5){
-                  int k;
-                  printf("Digite o índice k: ");
-                  scanf("%d", &k);
-                  int valor = ListaObj.RetornarK_esimoElemento(k);
-                  if (valor != -1)
-                      printf("Valor no índice %d: %d\n", k, valor);
+                int removedValue = ListaObj.RemoverK_esimoValorLista(k);
+                if (removedValue != -1)
+                    printf("Valor removido: %d\n", removedValue);
             }
-            else if (OP == 6){
+        }
+        else if (OP == 5)
+        {
+            printf("Entre com o índice para retornar o valor: ");
+            scanf("%d", &k);
+            int value = ListaObj.RetornarK_esimoElemento(k);
+            if (value != -1)
+                printf("Valor no índice %d: %d\n", k, value);
+        }
+        else if (OP == 6)
+        {
             ListaObj.MostrarLista();
         }
-			system("pause");
-		}
-	}
+        else
+        {
+            printf("Opção inválida. Tente novamente.\n");
+        }
+        
+        system("pause");
+    }
+    
+    return 0;
+}
