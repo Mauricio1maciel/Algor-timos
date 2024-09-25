@@ -79,12 +79,17 @@ void ClassePilha::MostrarPilha()
     //Pop ou Push
 	if(PilhaVazia()){
 		printf("Pilha esta vazia!\n");
-	}else{
-		printf("Pilha: ");
-		for(int i = topo; i >= 0; i--){
-			printf("%d ",pilha[i]);
 	}
-	printf("\n");
+
+	ClassePilha pilhaAux(-1);
+
+	while (!PilhaVazia()){
+		int valor = Pop();
+		printf("%d\n", valor);
+		pilhaAux.Push(valor);
+	}
+	while (!pilhaAux.PilhaVazia()){
+		Push(pilhaAux.Pop());
 	}
 }
 
